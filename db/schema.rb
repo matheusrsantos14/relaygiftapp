@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_06_20_051643) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -33,6 +36,18 @@ ActiveRecord::Schema.define(version: 2019_06_20_051643) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -45,6 +60,35 @@ ActiveRecord::Schema.define(version: 2019_06_20_051643) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "quotes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "phone_number"
+    t.integer "quote_bedroom"
+    t.integer "quote_bathroom"
+    t.datetime "quote_time"
+    t.date "quote_date"
+    t.string "email"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.integer "price"
+    t.integer "estimated_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "modal_tag"
+    t.string "serviceicon"
+    t.text "benefit_one"
+    t.text "benefit_two"
+    t.text "benefit_three"
+    t.string "servicephoto"
+    t.text "description"
   end
 
   create_table "spree_addresses", force: :cascade do |t|
@@ -1174,4 +1218,40 @@ ActiveRecord::Schema.define(version: 2019_06_20_051643) do
     t.index ["kind"], name: "index_spree_zones_on_kind"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "phone_number"
+    t.integer "quan_bedroom"
+    t.integer "quan_bathroom"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "visits", force: :cascade do |t|
+    t.string "service_name"
+    t.date "visit_date"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.datetime "visit_time"
+    t.integer "total_charge"
+    t.integer "admin_id"
+    t.index ["admin_id"], name: "index_visits_on_admin_id"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+  end
+
+  add_foreign_key "visits", "admins"
 end
