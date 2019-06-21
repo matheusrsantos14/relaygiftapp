@@ -1,5 +1,8 @@
 {
   "name": "relaygiftapp",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "preinstall": "node preinstall.js"
+  }
 }
