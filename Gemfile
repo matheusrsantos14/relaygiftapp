@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 
 gem 'spree', '~> 3.7.0.rc1'
-gem 'spree_auth_devise', '~> 3.4'
+gem 'spree_auth_devise', '~> 4.0'
 gem 'spree_gateway', '~> 3.4'
 
 gem 'spree_account_recurring', github: 'vinsol-spree-contrib/spree-account-recurring',  branch: 'master'
